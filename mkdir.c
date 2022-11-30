@@ -12,10 +12,10 @@
 
 #define mkdir_options "vm:"
 
-int create_dir(int argn, char ** args) {
+int main(int argc, char ** argv) {
     int c=0, flag=0;
     mode_t permission = 600;
-    while((c = getopt(argn, args, mkdir_options)) != -1) {
+    while((c = getopt(argc, argv, mkdir_options)) != -1) {
         switch(c) {
             case 'v':
                 flag += 1;
@@ -29,11 +29,11 @@ int create_dir(int argn, char ** args) {
         }
     }
 
-    if(optind >= argn) {
+    if(optind >= argc) {
         printf("Missing argument after options\n");
-        exit(EXIT_SUCCESS);
+        exit(EXIT_FAILURE);
     }
-    char * path = args[optind];
+    char * path = argv[optind];
     switch(flag) {
         default:
             if(mkdir(path, permission) == -1) {
