@@ -13,9 +13,9 @@
 #define mkdir_options "vm:"
 
 int create_dir(int argn, char ** args) {
-    int c=0, flags=0;
-    mode_t permission;
-    while((c = getopt(argn, args, valid_options)) != -1) {
+    int c=0, flag=0;
+    mode_t permission = 600;
+    while((c = getopt(argn, args, mkdir_options)) != -1) {
         switch(c) {
             case 'v':
                 flag += 1;
@@ -25,9 +25,7 @@ int create_dir(int argn, char ** args) {
 
             case '?':
                 perror("lsh: ");
-                exit(EXIT_SUCCESS);
-            default:
-                // print regularly.
+                exit(EXIT_FAILURE);
         }
     }
 
@@ -36,14 +34,14 @@ int create_dir(int argn, char ** args) {
         exit(EXIT_SUCCESS);
     }
     char * path = args[optind];
-    switch(flags) {
+    switch(flag) {
         default:
-            if( (mkdir(path)) == -1) {
+            if(mkdir(path, permission) == -1) {
                 perror("lsh: ");
                 exit(EXIT_FAILURE);
             };
         case 1:
-            if(mkdir(path) == 0) {
+            if(mkdir(path, permission) == 0) {
                 printf("Successfully created dir");
             }
             else {
@@ -51,12 +49,12 @@ int create_dir(int argn, char ** args) {
                 exit(EXIT_FAILURE);
             }
         case 2:
-            if( (mkdir(path), permission) == -1) {
+            if( (mkdir(path, permission) == -1)) {
                 perror("lsh: ");
                 exit(EXIT_FAILURE);
             }
         case 3:
-            if( (mkdir(path), permission) == 0) {
+            if((mkdir(path, permission) == 0)) {
                 printf("Successfully created dir");
             }
             else {
