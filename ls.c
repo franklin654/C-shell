@@ -92,7 +92,7 @@ void print_all_hidden_details() {
 
 
 int ls(int argn, char ** args) {
-    int c=0, flags=0;
+    int c=0, flag=0;
     while((c = getopt(argn, args, valid_options)) != -1) {
         switch(c) {
             case 'a':
@@ -102,9 +102,7 @@ int ls(int argn, char ** args) {
             case '?':
                 perror("lsh: ");
                 exit(EXIT_SUCCESS);
-            default:
-                // print regularly.
-        }
+    }
     }
     char * path = NULL;
     if(optind < argn) {
